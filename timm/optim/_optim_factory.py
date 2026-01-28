@@ -780,6 +780,13 @@ def _register_cautious_optimizers(registry: OptimizerRegistry) -> None:
             has_momentum=True,
             defaults={'nesterov': True, 'caution': True}
         ),
+        OptimInfo(
+            name='cadamp',
+            opt_class=AdamP,
+            description='Add the spherical cautious optimizer and the standard cautious optimizer to AdamP',
+            has_betas=True,
+            defaults={'wd_ratio': 0.01, 'nesterov': True, 'caution': True}
+        ),
     ]
     for opt in cautious_optimizers:
         registry.register(opt)
@@ -896,6 +903,24 @@ def _register_other_optimizers(registry: OptimizerRegistry) -> None:
             has_eps=True,
             has_betas=True,
             defaults={'nesterov': True}
+        ),
+        OptimInfo(
+            name='adamuon',
+            opt_class=Muon,
+            description='AdaMuon: Muon with adaptive second moment estimation on orthogonalized directions',
+            has_momentum=True,
+            has_eps=True,
+            has_betas=True,
+            defaults={'algo': 'adamuon'}
+        ),
+        OptimInfo(
+            name='nadamuon',
+            opt_class=Muon,
+            description='AdaMuon with Nesterov momentum and NAdamW fallback for 1D params',
+            has_momentum=True,
+            has_eps=True,
+            has_betas=True,
+            defaults={'algo': 'adamuon', 'nesterov': True}
         ),
         OptimInfo(
             name='novograd',
